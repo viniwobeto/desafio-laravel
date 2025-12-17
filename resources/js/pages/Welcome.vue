@@ -40,7 +40,6 @@ import { store as aporteStore } from '@/routes/aportes'
                         placeholder="Data do aporte"
                     />
                 </div>
-
                 <div class="grid gap-2">
                     <Label for="valor">Valor</Label>
                     <Input
