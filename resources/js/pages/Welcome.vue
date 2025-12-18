@@ -20,7 +20,6 @@ import { store as aporteStore } from '@/routes/aportes'
         description="Enter your details below to create your account"
     >
         <Head title="Register" />
-
         <Form
             v-bind="aporteStore.form()"
             :reset-on-success="['tipo', 'valor']"
