@@ -23,8 +23,8 @@ const onError = () => {
 
 <template>
     <AuthBase
-        title="Create an account"
-        description="Enter your details below to create your account"
+        title="Aportes financeiros"
+        description="Preencha os campos"
     >
         <Head title="Register" />
 
@@ -36,12 +36,9 @@ const onError = () => {
             @error="onError"
             class="flex flex-col gap-6"
         >
-    <div
-    v-if="successMessage"
-    class="rounded-md bg-green-100 border border-green-300 text-green-800 px-4 py-3"
->
-    {{ successMessage }}
-</div>
+ <div v-if="successMessage" class="rounded-md bg-green-100 border border-green-300 text-green-800 px-4 py-3"   >
+            {{ successMessage }}
+        </div>
 
             <div class="grid gap-6">
                 <div class="grid gap-2">
@@ -55,6 +52,8 @@ const onError = () => {
                         name="data_aporte"
                         placeholder="Data do aporte"
                     />
+                                <InputError :message="errors.data_aporte" />
+
                 </div>
                 <div class="grid gap-2">
                     <Label for="valor">Valor</Label>
@@ -129,6 +128,7 @@ const onError = () => {
                     <Spinner v-if="processing" />
                     Salvar
                 </Button>
+
             </div>
 
 

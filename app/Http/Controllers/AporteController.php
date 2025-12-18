@@ -11,13 +11,14 @@ class AporteController extends Controller
      public function store(Request $request)
     {
         $data = $request->validate([
-            'data_aporte'  => ['required', 'date'],
+            'data_aporte'  => ['required', 'date','before_or_equal:today'],
             'valor' => ['required', 'numeric', 'min:0.01'],
             'ativo' => ['required', 'string'],
             'tipo'  => ['required', 'string'],
         ],
 
               [
+        'data_aporte.before_or_equal' => 'A data do aporte não pode ser futura.',
         'valor.min' => 'O valor deve ser maior que zero.',
         'valor.numeric' => 'Valor não númerico',
 
