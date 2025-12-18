@@ -12,7 +12,7 @@ import { ref } from 'vue'
 const successMessage = ref<string | null>(null)
 
 const onSuccess = () => {
-    successMessage.value = 'Aporte cadastrado com sucesso!'
+    successMessage.value = 'Aporte cadastrado com sucesso! '
 }
 
 const onError = () => {
@@ -36,7 +36,16 @@ const onError = () => {
             @error="onError"
             class="flex flex-col gap-6"
         >
-
+       <div v-if="successMessage" class="text-green-600">
+    {{ successMessage }}
+    <a
+        target="_blank"
+        href="/dashboard"
+        class="ml-2 text-blue-600 underline hover:text-blue-800"
+    >
+        Ver relatório
+    </a>
+</div>
 
             <div class="grid gap-6">
                 <div class="grid gap-2">
@@ -126,7 +135,6 @@ const onError = () => {
                     <Spinner v-if="processing" />
                     Salvar
                 </Button>
-
             </div>
 
 
