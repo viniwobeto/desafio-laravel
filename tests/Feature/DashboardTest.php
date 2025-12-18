@@ -12,6 +12,7 @@ class DashboardTest extends TestCase
 
     public function test_dashboard_is_not_tested()
 {
+
     $this->markTestSkipped('Dashboard não possui regras para teste.');
 }
 }
