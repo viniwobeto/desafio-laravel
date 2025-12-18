@@ -6,11 +6,18 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { Form, Head } from '@inertiajs/vue3';
-
-
-
-
 import { store as aporteStore } from '@/routes/aportes'
+import { ref } from 'vue'
+
+const successMessage = ref<string | null>(null)
+
+const onSuccess = () => {
+    successMessage.value = 'Aporte cadastrado com sucesso!'
+}
+
+const onError = () => {
+    successMessage.value = null
+}
 
 </script>
 
@@ -23,10 +30,19 @@ import { store as aporteStore } from '@/routes/aportes'
 
         <Form
             v-bind="aporteStore.form()"
-            :reset-on-success="['tipo', 'valor']"
+            :reset-on-success="['data_aporte','ativo','tipo', 'valor']"
             v-slot="{ errors, processing }"
+            @success="onSuccess"
+            @error="onError"
             class="flex flex-col gap-6"
         >
+    <div
+    v-if="successMessage"
+    class="rounded-md bg-green-100 border border-green-300 text-green-800 px-4 py-3"
+>
+    {{ successMessage }}
+</div>
+
             <div class="grid gap-6">
                 <div class="grid gap-2">
                     <Label for="data_aporte">Data do aporte</Label>
@@ -56,26 +72,51 @@ import { store as aporteStore } from '@/routes/aportes'
 
                 <div class="grid gap-2">
                     <Label for="ativo">Ativo</Label>
-                    <Input
-                        id="ativo"
-                        type="text"
-                        required
-                        :tabindex="3"
-                        name="ativo"
-                        placeholder="Ativo"
-                    />
+
+                      <div class="flex items-center gap-6">
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="ativo"
+                value="PETR4"
+                required
+            />
+            <span>PETR4</span>
+        </label>
+
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="ativo"
+                value="Tesouro Direto"
+            />
+            <span>Tesouro Direto</span>
+        </label>
+    </div>
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="tipo">Tipo</Label>
-                    <Input
-                        id="tipo"
-                        type="text"
-                        required
-                        :tabindex="4"
-                        name="tipo"
-                        placeholder="Tipo"
-                    />
+                       <div class="flex items-center gap-6">
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="tipo"
+                value="Renda fixa"
+                required
+            />
+            <span>Renda fixa</span>
+        </label>
+
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="tipo"
+                value="Variável"
+            />
+            <span>Variável</span>
+        </label>
+    </div>
                 </div>
 
                 <Button
