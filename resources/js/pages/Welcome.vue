@@ -36,9 +36,7 @@ const onError = () => {
             @error="onError"
             class="flex flex-col gap-6"
         >
- <div v-if="successMessage" class="rounded-md bg-green-100 border border-green-300 text-green-800 px-4 py-3"   >
-            {{ successMessage }}
-        </div>
+
 
             <div class="grid gap-6">
                 <div class="grid gap-2">
