@@ -20,6 +20,7 @@ import { store as aporteStore } from '@/routes/aportes'
         description="Enter your details below to create your account"
     >
         <Head title="Register" />
+
         <Form
             v-bind="aporteStore.form()"
             :reset-on-success="['tipo', 'valor']"
@@ -28,14 +29,14 @@ import { store as aporteStore } from '@/routes/aportes'
         >
             <div class="grid gap-6">
                 <div class="grid gap-2">
-                    <Label for="data">Data do aporte</Label>
+                    <Label for="data_aporte">Data do aporte</Label>
                     <Input
-                        id="data"
+                        id="data_aporte"
                         type="date"
                         required
                         autofocus
                         :tabindex="1"
-                        name="data"
+                        name="data_aporte"
                         placeholder="Data do aporte"
                     />
                 </div>

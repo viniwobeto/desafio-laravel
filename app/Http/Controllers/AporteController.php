@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Aporte;
 
 class AporteController extends Controller
 {
      public function store(Request $request)
     {
         $data = $request->validate([
-            'data'  => ['required', 'date'],
+            'data_aporte'  => ['required', 'date'],
             'valor' => ['required', 'numeric', 'min:0.01'],
             'ativo' => ['required', 'string'],
             'tipo'  => ['required', 'string'],
@@ -25,6 +26,9 @@ class AporteController extends Controller
     );
 
 
-        return back();
+    Aporte::create($data);
+
+
+    return back()->with('success', 'Aporte cadastrado com sucesso!');
     }
 }
