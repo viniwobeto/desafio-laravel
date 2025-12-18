@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Aporte;
 
 class AporteController extends Controller
 {
      public function store(Request $request)
     {
         $data = $request->validate([
-            'data'  => ['required', 'date'],
+            'data_aporte'  => ['required', 'date','before_or_equal:today'],
             'valor' => ['required', 'numeric', 'min:0.01'],
             'ativo' => ['required', 'string'],
             'tipo'  => ['required', 'string'],
         ],
 
               [
+        'data_aporte.before_or_equal' => 'A data do aporte não pode ser futura.',
         'valor.min' => 'O valor deve ser maior que zero.',
         'valor.numeric' => 'Valor não númerico',
 
@@ -25,6 +27,9 @@ class AporteController extends Controller
     );
 
 
-        return back();
+    Aporte::create($data);
+
+
+    return back()->with('success', 'Aporte cadastrado com sucesso!');
     }
 }

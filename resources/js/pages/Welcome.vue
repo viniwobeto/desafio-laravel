@@ -6,38 +6,54 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { Form, Head } from '@inertiajs/vue3';
-
-
-
-
 import { store as aporteStore } from '@/routes/aportes'
+import { ref } from 'vue'
+
+const successMessage = ref<string | null>(null)
+
+const onSuccess = () => {
+    successMessage.value = 'Aporte cadastrado com sucesso!'
+}
+
+const onError = () => {
+    successMessage.value = null
+}
 
 </script>
 
 <template>
     <AuthBase
-        title="Create an account"
-        description="Enter your details below to create your account"
+        title="Aportes financeiros"
+        description="Preencha os campos"
     >
         <Head title="Register" />
+
         <Form
             v-bind="aporteStore.form()"
-            :reset-on-success="['tipo', 'valor']"
+            :reset-on-success="['data_aporte','ativo','tipo', 'valor']"
             v-slot="{ errors, processing }"
+            @success="onSuccess"
+            @error="onError"
             class="flex flex-col gap-6"
         >
+ <div v-if="successMessage" class="rounded-md bg-green-100 border border-green-300 text-green-800 px-4 py-3"   >
+            {{ successMessage }}
+        </div>
+
             <div class="grid gap-6">
                 <div class="grid gap-2">
-                    <Label for="data">Data do aporte</Label>
+                    <Label for="data_aporte">Data do aporte</Label>
                     <Input
-                        id="data"
+                        id="data_aporte"
                         type="date"
                         required
                         autofocus
                         :tabindex="1"
-                        name="data"
+                        name="data_aporte"
                         placeholder="Data do aporte"
                     />
+                                <InputError :message="errors.data_aporte" />
+
                 </div>
                 <div class="grid gap-2">
                     <Label for="valor">Valor</Label>
@@ -55,26 +71,51 @@ import { store as aporteStore } from '@/routes/aportes'
 
                 <div class="grid gap-2">
                     <Label for="ativo">Ativo</Label>
-                    <Input
-                        id="ativo"
-                        type="text"
-                        required
-                        :tabindex="3"
-                        name="ativo"
-                        placeholder="Ativo"
-                    />
+
+                      <div class="flex items-center gap-6">
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="ativo"
+                value="PETR4"
+                required
+            />
+            <span>PETR4</span>
+        </label>
+
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="ativo"
+                value="Tesouro Direto"
+            />
+            <span>Tesouro Direto</span>
+        </label>
+    </div>
                 </div>
 
                 <div class="grid gap-2">
                     <Label for="tipo">Tipo</Label>
-                    <Input
-                        id="tipo"
-                        type="text"
-                        required
-                        :tabindex="4"
-                        name="tipo"
-                        placeholder="Tipo"
-                    />
+                       <div class="flex items-center gap-6">
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="tipo"
+                value="Renda fixa"
+                required
+            />
+            <span>Renda fixa</span>
+        </label>
+
+        <label class="flex items-center gap-2 cursor-pointer">
+            <input
+                type="radio"
+                name="tipo"
+                value="Variável"
+            />
+            <span>Variável</span>
+        </label>
+    </div>
                 </div>
 
                 <Button
@@ -87,6 +128,7 @@ import { store as aporteStore } from '@/routes/aportes'
                     <Spinner v-if="processing" />
                     Salvar
                 </Button>
+
             </div>
 
 
